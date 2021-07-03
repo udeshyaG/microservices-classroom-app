@@ -36,7 +36,7 @@ router.post(
 
       const token = jwt.sign(payload, process.env.JWT_SECRET);
 
-      res.status(201).send({ msg: 'User Created', token });
+      res.status(201).send({ msg: 'User Created', token, user: newUser[0] });
     } catch (error) {
       res.status(500).send({ error: 'Something went wrong' });
     }

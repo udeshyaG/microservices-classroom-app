@@ -28,6 +28,7 @@ const StudentComments = () => {
     );
 
     setCommentsList([...commentsList, response.data]);
+    setNewComment('');
   };
 
   useEffect(() => {

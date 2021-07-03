@@ -1,5 +1,7 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../context/auth-context';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -8,18 +10,34 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
+  const [auth, setAuth] = useContext(AuthContext);
+  const history = useHistory();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/auth/register', {
-        name,
-        type,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        'http://localhost:8000/api/auth/register',
+        { name, type, email, password }
+      );
+
+      const loggedInUser = response.data;
+      delete loggedInUser.msg;
+
+      setAuth({ user: loggedInUser.user, isLoggedIn: true });
 
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem(
+        'auth',
+        JSON.stringify({ user: loggedInUser.user, isLoggedIn: true })
+      );
+
+      if (type === 'TEACHER') {
+        history.push('/teachers/ann');
+      } else if (type === 'STUDENT') {
+        history.push('/students/ann');
+      }
     } catch (error) {
       setErrorMsg('Unable to registser. Check credentials');
       console.log(error);
