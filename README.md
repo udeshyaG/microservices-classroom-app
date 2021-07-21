@@ -15,15 +15,93 @@
 <img src="screenshots/classroom-k8s-arch.JPG" />
 
 ### Explanation
-| Service       | Tech Used                                                               | Description                                                                                                                                                                                                              |
-|---------------|-------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Client        | React JS Nginx                                                          | This is the frontend of the application. The client container has Nginx installed which serves the built react app from `build` folder.                                                                                  |
-| Auth          | Node JS Postgres SQL                                                    | The auth service handles registration and login of users. It handles the requests to `/api/auth`.                                                                                                                        |
-| Teachers      | Node JS Postgres SQL                                                    | This services handles all functionality related to teacher `/api/teachers`. It has a DB of its own which stores the student data redundantly. Hence even if the student or service goes down, it can function perfectly  |
-| Students      | Node JS Postgres SQL                                                    | This service handles all functionality of a student `/api/students`. It has a DB which stores teachers data redundantly. Hence even if other services go down, it is not affected                                        |
-| Ingress Nginx | [Ingress Nginx Controller](https://kubernetes.github.io/ingress-nginx/) | This is the gateway between the outside traffic and our Kubernetes cluster. It routes the traffic to the appropriate routes.                                                                                             |
-
----
+<table>
+    <tbody>
+    <tr>
+      <th>Service</th>
+      <th>Tech Used</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>Client</td>
+      <td>
+        <ul>
+          <li>React JS</li>
+          <li>Nginx Server</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>This is the front end of the app</li>
+          <li>The client container has <strong>Nginx</strong> installed with the built react code</li>
+          <li>Nginx serves the built react app from <code>build</code> folder</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Auth</td>
+      <td>
+        <ul>
+          <li>Node JS</li>
+          <li>Postgres SQL</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>Handles request to <code>/api/auth</code></li>
+          <li>Registration and Login of Users</li>
+          <li>Check if user is student or teacher</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Teachers</td>
+      <td>
+        <ul>
+          <li>Node JS</li>
+          <li>Postgres SQL</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li><code>/api/teachers</code> Handles all functionality of teachers</li>
+          <li>Has separate DB. Hence independent of all services</li>
+          <li>Communicates with Students service using <strong>AMQP</strong>(Asynchronous Messaging Queue Protocol)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Students</td>
+      <td>
+        <ul>
+          <li>Node JS</li>
+          <li>Postgres SQL</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li><code>/api/students</code> Handles all functionality of students</li>
+          <li>Has separate DB. Hence independent of all services</li>
+          <li>Communicates with Teachers service using <strong>AMQP</strong></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Ingress Nginx</td>
+      <td>
+        <ul>
+          <li>Ingress Nginx Controller</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>Gateway between the outside traffic and our Kubernetes cluster</li>
+          <li>Routes traffic to appropriate service</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ### Microservices Architecture
 <img src="screenshots/classroom-k8s-microservice.JPG" />
@@ -40,7 +118,7 @@
       <td>
         <ul>
           <li>Teacher Creates an announcement. Stores in Teachers DB</li>
-          <li>`announcement_created` event is created. Passed to <bold>RabbitMQ</bold> via <bold>AMQP</bold></li>
+          <li><code>announcement_created</code> event is created. Passed to <strong>RabbitMQ</strong> via <strong>AMQP</strong></li>
           <li>RabbitMQ transfers this event to Student service</li>
           <li>Student saves this announcement info in its DB</li>
         </ul>
@@ -51,7 +129,7 @@
       <td>
         <ul>
           <li>Student creates a comment. Stores in Student DB</li>
-          <li>`comment_created` event created. Passed to **RabbitMQ** via AMQP</li>
+          <li><code>comment_created</code> event created. Passed to RabbitMQ via AMQP</li>
           <li>RabbitMQ transfers this event to Teachers service</li>
           <li>Teacher saves this announcement info in its DB</li>
         </ul>
