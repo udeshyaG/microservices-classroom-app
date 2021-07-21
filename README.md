@@ -11,6 +11,8 @@
 - Postgres 🐘 (Database)
 - Travis CI (Testing and Continuous Integration)
 
+---
+
 ### Kubernetes Cluster
 <img src="screenshots/classroom-k8s-arch.JPG" />
 
@@ -102,6 +104,8 @@
     </tr>
   </tbody>
 </table>
+
+---
 
 ### Microservices Architecture
 <img src="screenshots/classroom-k8s-microservice.JPG" />
