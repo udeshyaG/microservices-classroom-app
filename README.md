@@ -26,4 +26,45 @@
 ---
 
 ### Microservices Architecture
-<img src="screenshots/classroom-k8s-arch.JPG" />
+<img src="screenshots/classroom-k8s-microservice.JPG" />
+
+### Explanation
+<table>
+  <tbody>
+    <tr>
+      <th>Event</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>Annoucement</td>
+      <td>
+        <ul>
+          <li>Teacher Creates an announcement. Stores in Teachers DB</li>
+          <li>`announcement_created` event is created. Passed to <bold>RabbitMQ</bold> via <bold>AMQP</bold></li>
+          <li>RabbitMQ transfers this event to Student service</li>
+          <li>Student saves this announcement info in its DB</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Comments</td>
+      <td>
+        <ul>
+          <li>Student creates a comment. Stores in Student DB</li>
+          <li>`comment_created` event created. Passed to **RabbitMQ** via AMQP</li>
+          <li>RabbitMQ transfers this event to Teachers service</li>
+          <li>Teacher saves this announcement info in its DB</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Auth</td>
+      <td>
+        <ul>
+          <li>Auth services is independent. Does not create or receive any events</li>
+          <li>It maintains its own DB of users.</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
