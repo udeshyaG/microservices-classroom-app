@@ -1,4 +1,4 @@
-# My Microservices Project
+# My Microservices Project [![Build Status](https://www.travis-ci.com/udeshyaG/microservices-classroom-app.svg?branch=master)](https://www.travis-ci.com/udeshyaG/microservices-classroom-app)
 
 ### [Click Here](https://lucid.app/lucidchart/invitations/accept/inv_f0ee79fc-296e-4ed6-b33d-ff46a0e353ad) to view the Architecture Diagrams
 
@@ -9,7 +9,7 @@
 - Node, Express JS (Backend)
 - React ⚛ (Frontend)
 - Postgres 🐘 (Database)
-- Travis CI (Testing and Continuous Integration)
+- Travis CI (Testing and Continuous Integration) 👷‍♂️
 
 ---
 
@@ -187,6 +187,6 @@ Create all the Kubernetes Objects
 ```
 kubectl apply -f k8s/
 ```
-<img src="screenshots/classroom-ss-create-objects">
+<img src="screenshots/classroom-ss-create-objects.JPG">
 
 Check out the app on `localhost:80`
