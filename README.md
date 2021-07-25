@@ -150,3 +150,43 @@
     </tr>
   </tbody>
 </table>
+
+### Teachers Service
+1. Teachers can view and create new announcements 
+<img src="screenshots/classroom-ss-teacher-ann.JPG">
+
+2. Teachers can see all comments made by students. Comments can also be deleted
+<img src="screenshots/classroom-ss-teachers-comment.JPG">
+
+### Students Service 
+1. Student can view all announcements
+<img src="screenshots/classroom-ss-students-ann.JPG">
+
+2. Student can make a new comment on an announcement
+<img src="screenshots/classroom-ss-students-comments.JPG">
+
+### Auth service 
+1. Register or Login a new user (student and teacher)
+<img src="screenshots/classroom-ss-auth-register.JPG">
+
+---
+
+### Install and run locally
+Setup the Ingress Nginx Controller
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.48.1/deploy/static/provider/cloud/deploy.yaml
+```
+
+Check the installation
+```
+kubectl get pods -n ingress-nginx
+```
+<img src="screenshots/classroom-ingress-nginx.JPG">
+
+Create all the Kubernetes Objects
+```
+kubectl apply -f k8s/
+```
+<img src="screenshots/classroom-ss-create-objects">
+
+Check out the app on `localhost:80`
